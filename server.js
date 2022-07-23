@@ -118,8 +118,93 @@ async function addDepartment(){
                 {
                     const role = db.addRole(response.roleName, response.salaryTotal,response.deptID);
                     console.table(role);
+                    start();
                 })
-            })
+            });
 
             }
+
+            //create new Employeee 
+            newEmployee = () => {
+                return inquirer
+                .prompt([
+                    {
+                        type: "input",
+                        message: "Employee's First Name",
+                        name: 'first_name'
+                    },
+                    {
+                        type:'input',
+                        message: "Employee's Last Name",
+                        name: 'last_name'
+                    },
+                    {
+                        type:'input',
+                        message:"Employee's Manager's ID",
+                        name: "manager_id"
+                    }
+                ])
+            }
+            async function addEmployee(){
+                newEmployee().then(response =>
+                    {
+                        const employee = db.addEmployee(response.first_name, response.last_name, response.role_id, response.manager_id)
+                        console.table(employee);
+                    })
+            }
+
+            //Update Employee 
+            async function updateEmployee(){
+                //View all the employees
+                const employees = await db.viewAllEmployees();
+                //View all the roles 
+                const roles = await db.viewAllRoles();
+                const employeeName = [];
+                const employeeRole = [];
+
+                // Display employee list 
+                const list = employees.forEach(employee => {
+                    empolyeeName.push(employee.fisrt_name)
+                });
+                //Update new role 
+                const updateRole = roles.foreach(role => {
+                    employeeRole.push(role.title)
+                });
+
+                inquirer.prompt([
+                    {
+                        type:'list',
+                        name:'name',
+                        message:'Which employee would you like to update?',
+                        choices: employeeName
+                
+                    },
+                    {
+                        type: 'list',
+                        name: 'role',
+                        message: "Which employee's new role?",
+                        choices: employeeRole
+                    }
+                ]).then((answer) =>{
+                    //store the new role_id and the employeee id 
+                    let newTitleId, employeeId;
+                    // store the new role_id that matches the role title 
+                    roles.forEach((role)=>{
+                        if(answer.role === role.title) {
+                            newTitleId = role.id;
+                        }
+                    });
+                    //store the employeeId that matches the first name 
+                    employees.forEach((employee)=>{
+                        if(answer.name === employee.fisrt_name) {
+                            employeeId = employeeId
+                        }
+                    })
+                    //Updates employee new role 
+                    db.updateEmployeeRole(employeeId, newTitleId);
+                    start();
+                })
+                
+            }
         
+start();
