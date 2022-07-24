@@ -5,13 +5,13 @@ CREATE DATABASE employee_DB;
 USE employee_DB;
 
 --department table 
-CREATE TABLE department ( 
+CREATE TABLE department( 
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(30) NOT NULL
+    name: VARCHAR(30) NOT NULL;
 );
 
 -- role table
-CREATE TABLE role (
+CREATE TABLE role(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE role (
 
 -- empolyee table
 
-CREATE TABLE employee (
+CREATE TABLE employee(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
